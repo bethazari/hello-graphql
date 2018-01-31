@@ -1,6 +1,29 @@
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
+import rp from 'request-promise-native';
+
+rp({
+  method: "POST",
+  uri: "http://default.coin32-cab.demo.al.re/api/2/common/login", 
+  body: {
+    email: "althazari@gmail.com", 
+    password: "restPasS",
+  },
+  json: true,
+  withCredentials: true,
+  zya: true,
+}).then((a) => {
+  console.log(a);
+  rp({
+    method: "GET",
+    uri: "http://default.coin32-cab.demo.al.re/api/2/common/auth/",
+    withCredentials: true,
+  }).then((b) => {
+    console.log(b);    
+  });
+});
+
 import schema from './data/schema';
 
 const Dataloader = require("dataloader");
