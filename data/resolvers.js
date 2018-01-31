@@ -1,18 +1,22 @@
+
+
+
 export default {
   Query: {
     author(root, args) {
       return {id: 1, fristName: 'Hello', lastName: 'World!' };
     },
     allAuthors() {
-      return [{ id: 1, firstName: 'Hello', lastName: 'World!' }];
+      return [
+        { id: 1, firstName: 'Hello', lastName: 'World!' },
+        { id: 2, firstName: 'Hello2', lastName: 'World2!' },
+      ];
     },
   },
   Author: {
-    posts(author) {
-      return [
-        { id: 1, title: 'A post', text: 'Some text', views: 2 },
-        { id: 2, title: 'B post', text: 'Some other text', views: 5 },
-      ];
+    posts(author, root, context) {
+      console.log(author);
+      return context.postsLoader.load(author.id);
     },
   },
 };
