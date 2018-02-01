@@ -3,6 +3,8 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import rp from 'request-promise-native';
 
+const j = rp.jar();
+
 rp({
   method: "POST",
   uri: "http://default.coin32-cab.demo.al.re/api/2/common/login", 
@@ -11,16 +13,22 @@ rp({
     password: "restPasS",
   },
   json: true,
-  withCredentials: true,
-  zya: true,
+  jar: j,
 }).then((a) => {
   console.log(a);
   rp({
     method: "GET",
     uri: "http://default.coin32-cab.demo.al.re/api/2/common/auth/",
-    withCredentials: true,
+    jar: j,
   }).then((b) => {
     console.log(b);    
+    rp({
+      method: "GET",
+      uri: "http://default.coin32-cab.demo.al.re/api/2/common/account/",
+      jar: j,
+    }).then((c) => {
+      console.log(c);    
+    });
   });
 });
 
